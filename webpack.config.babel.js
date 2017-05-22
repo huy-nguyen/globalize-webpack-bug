@@ -9,9 +9,13 @@ import {
 } from 'webpack-config-utils';
 
 export default (env) => {
+  const isVendor = ({resource}) => resource && /node_modules/.test(resource) && resource.match(/\.js$/);
   const {ifProduction} = getIfUtils(env);
+  const entry = ifProduction() ? {
+    main: './src/index',
+  } : './src/index';
   return {
-    entry: './src/index',
+    entry,
     output: {
       path: resolve('dist'),
       filename: '[name].js',
@@ -33,6 +37,10 @@ export default (env) => {
       ]
     },
     plugins: [
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks: mod => isVendor(mod),
+      }),
       new HtmlWebpackPlugin({
         production: ifProduction(),
         title: 'Test',
