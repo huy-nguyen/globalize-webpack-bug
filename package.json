@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "build": "rm -rf dist && webpack",
-    "dev": "webpack-dev-server",
-    "serve": "(cd dist && python -m SimpleHTTPServer 8081)"
+    "clean": "rm -rf dist .tmp-globalize-webpack",
+    "build": "npm run clean && webpack --env production",
+    "build:dev": "npm run clean && webpack --env development",
+    "dev": "webpack-dev-server --env development"
   },
   "devDependencies": {
     "babel-cli": "6.24.1",
@@ -11,12 +12,16 @@
     "babel-preset-env": "1.5.1",
     "babel-preset-react": "6.24.1",
     "babel-register": "6.24.1",
+    "globalize-webpack-plugin": "1.0.0-alpha.0",
     "html-webpack-plugin": "2.28.0",
     "webpack": "2.5.1",
+    "webpack-config-utils": "2.3.0",
     "webpack-dev-server": "2.4.5"
   },
   "dependencies": {
-    "react": "15.5.4",
-    "react-dom": "15.5.4"
+    "cldr": "4.3.0",
+    "cldr-data": "31.0.2",
+    "globalize": "1.2.3",
+    "iana-tz-data": "2017.1.0"
   }
 }

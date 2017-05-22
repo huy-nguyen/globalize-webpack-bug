@@ -1,0 +1,6 @@
+{
+  "es": {
+    "message-1": "Un ejemplo de un mensaje con soporte de pluralización: {count, plural, one {Tienes una tarea pendiente} other {Tiene # tareas restantes}}"
+
+  }
+}

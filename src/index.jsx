@@ -1,8 +1,7 @@
-import React from 'react';
-import {render} from 'react-dom';
-import App from './App';
+import Globalize from 'globalize';
 
-render(
-  <App/>,
-  document.getElementById('app-container'),
-)
+const text = Globalize.formatMessage('message-1', {
+  count: 3,
+})
+
+document.write(`<div>${text}</div>`);

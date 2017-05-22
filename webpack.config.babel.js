@@ -3,8 +3,13 @@ import {
 } from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import webpack from 'webpack';
+import GlobalizePlugin from 'globalize-webpack-plugin';
+import {
+  getIfUtils
+} from 'webpack-config-utils';
 
-export default () => {
+export default (env) => {
+  const {ifProduction} = getIfUtils(env);
   return {
     entry: './src/index',
     output: {
@@ -23,30 +28,24 @@ export default () => {
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
-            options: {
-              presets: [
-                'react',
-                [
-                  'env', {
-                    targets: {
-                      browsers: ['last 1 Chrome version'],
-                    },
-                    modules: false,
-                    debug: true,
-                  }
-                ]
-              ]
-            }
           }
         }
       ]
     },
     plugins: [
       new HtmlWebpackPlugin({
+        production: ifProduction(),
         title: 'Test',
         template: './src/index.html',
       }),
       new webpack.HotModuleReplacementPlugin(),
+  		new GlobalizePlugin({
+  			production: ifProduction(),
+  			developmentLocale: "en",
+  			supportedLocales: ["en", "es"],
+  			messages: "messages/[locale].json",
+  			output: "i18n/[locale].[hash].js"
+  		}),
     ],
     devServer: {
       hot: true,
